@@ -7,6 +7,7 @@ import com.intellij.openapi.ui.Messages
 class HelloAction : AnAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
+        println("event.inputEvent.isShiftDown: " + event.inputEvent.isShiftDown)
         Messages.showInfoMessage("Hello from my plugin", "Hello")
     }
 

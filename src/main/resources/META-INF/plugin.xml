@@ -1,6 +1,6 @@
 <idea-plugin>
-    <id>idea-plugin-hello-world-demo</id>
-    <name>idea-plugin-hello-world-demo</name>
+    <id>idea-plugin-key-pressing-listener-demo</id>
+    <name>idea-plugin-key-pressing-listener-demo</name>
     <version>1.0</version>
     <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
@@ -28,11 +28,17 @@
         <!-- Add your extensions here -->
     </extensions>
 
+    <application-components>
+        <component>
+            <implementation-class>example.HelloComponent</implementation-class>
+        </component>
+    </application-components>
+
     <actions>
 
-        <group id="MyPlugin.SampleMenu" text="_Sample Menu" description="Sample menu">
+        <group id="idea-plugin-key-pressing-listener-demo.MyPlugin.SampleMenu" text="_Sample Menu" description="Sample menu">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="action.popup" class="actions.HelloAction" text="_Popup" description="Popup a message"/>
+            <action id="idea-plugin-key-pressing-listener-demo.action.popup" class="actions.HelloAction" text="_Popup" description="Popup a message"/>
         </group>
 
     </actions>
