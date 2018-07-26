@@ -1,7 +1,12 @@
-Idea Plugin Block Key Pressing Demo
-===================================
+Idea Plugin Simulate Key Pressing
+=================================
 
-Some of your keys(`x` in this demo) is blocked, you can't type it to editor.
+Two way to simulate key pressing:
+
+1. when `x` is pressed, it will be ignored and simulated `s` will be sent 5 times, using `Toolkit.getDefaultToolkit().systemEventQueue.postEvent(createKeyEvent(event))`
+2. when `y` is pressed, it will be ignored and simulated `c` will be sent 10 times(it should be `5`), using `Robot.keyPressing`
+
+The 2nd way has issues, can't fix it now.
 
 Run plugin in IDEA
 ------------------
@@ -10,7 +15,7 @@ Run plugin in IDEA
 ./gradlew runIde
 ```
 
-Create any file, and type something into it, you will find you can't type char `x`, because it's consumed by this plugin.
+Create any file, and type something into it, including char `x` and `y`, you will see something strange.
 
 Build the plugin to a zip
 -------------------------
