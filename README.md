@@ -1,12 +1,7 @@
-Idea Plugin Simulate Key Pressing
-=================================
+Idea Plugin Hold Keys and Send Together Demo
+============================================
 
-Two way to simulate key pressing:
-
-1. when `x` is pressed, it will be ignored and simulated `s` will be sent 5 times, using `Toolkit.getDefaultToolkit().systemEventQueue.postEvent(createKeyEvent(event))`
-2. when `y` is pressed, it will be ignored and simulated `c` will be sent 10 times(it should be `5`), using `Robot.keyPressing`
-
-The 2nd way has issues, can't fix it now.
+When you typing in an editor, you will found your keys are typed in a group of 5 together.
 
 Run plugin in IDEA
 ------------------
@@ -14,8 +9,6 @@ Run plugin in IDEA
 ```
 ./gradlew runIde
 ```
-
-Create any file, and type something into it, including char `x` and `y`, you will see something strange.
 
 Build the plugin to a zip
 -------------------------

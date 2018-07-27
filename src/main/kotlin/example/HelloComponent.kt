@@ -1,46 +1,50 @@
 package example
 
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.ApplicationComponent
 import org.apache.commons.lang.builder.ToStringBuilder
-import org.jetbrains.java.generate.GenerateToStringUtils
 import java.awt.AWTEvent
 import java.awt.Component
-import java.awt.Robot
 import java.awt.Toolkit
 import java.awt.event.KeyEvent
 
 class HelloComponent : ApplicationComponent {
 
+    private val keyEvents = mutableListOf<KeyEvent>()
+    private val sentEvents = mutableListOf<KeyEvent>()
+
     override fun initComponent() {
-        println("idea-plugin-block-key-pressing-demo: initComponent222")
-//        Toolkit.getDefaultToolkit()
+        println("idea-plugin-hold-keys-and-send-together-demo:initComponent")
         Toolkit.getDefaultToolkit().addAWTEventListener({ event ->
             when (event) {
-                is KeyEvent -> {
-                    println("event.keyChar: ${event.keyChar}, keyCode: `${event.keyCode}`")
-                    if (event.keyChar == 'x') {
-                        event.consume()
-                        println("${event.keyChar} is consumed")
+                is KeyEvent ->
+                    when (event.source) {
+                        is com.intellij.openapi.editor.impl.EditorComponentImpl -> {
 
-                        repeat(5) {
-                            Toolkit.getDefaultToolkit().systemEventQueue.postEvent(createKeyEvent(event))
+                            println("--------- ${event.keyChar} : ${event.hashCode()} ---------------")
+                            println("keyEvents size: ${keyEvents.size}")
+                            val myEvent = sentEvents.any { it === event }
+                            if (!myEvent) {
+                                event.consume()
+                                keyEvents.add(createKeyEvent(event))
+
+                                // each key has 3 events:
+                                // KEY_PRESSED
+                                // KEY_TYPED
+                                // KEY_RELEASED
+                                // so the size is 15, and the chars are only 5
+                                if (keyEvents.size >= 15) {
+                                    val todo = keyEvents.take(15)
+                                    repeat(15) { keyEvents.removeAt(0) }
+
+                                    sentEvents.addAll(todo)
+
+                                    todo.forEach { event ->
+                                        Toolkit.getDefaultToolkit().systemEventQueue.postEvent(event)
+                                    }
+                                }
+                            }
                         }
                     }
-
-                    if (event.keyChar == 'y') {
-                        event.consume()
-                        println("${event.keyChar} is consumed")
-
-                        val robot = Robot()
-
-                        // FIXME not sure why it prints 'c' 10 times
-                        repeat(5) {
-                            robot.keyPress(67)
-                            robot.keyRelease(67)
-                        }
-                    }
-                }
             }
         }, AWTEvent.KEY_EVENT_MASK)
     }
@@ -51,8 +55,8 @@ class HelloComponent : ApplicationComponent {
                 event.id,
                 event.`when`,
                 event.modifiers,
-                83,
-                's',
+                event.keyCode,
+                event.keyChar,
                 event.keyLocation
         )
     }
