@@ -1,7 +1,12 @@
-Idea Plugin Hold Keys and Send Together Demo
-============================================
+Idea Plugin Hold Keys and Send Them Together when not Busy Demo
+===============================================================
 
-When you typing in an editor, you will found your keys are typed in a group of 5 together.
+When you typing in an editor fast, they will not show, and when you stop typing for a while, they will show together.
+
+Two problems in this demo:
+
+1. The `sendingEvents` and `keyEvents` is are thread-safe, I didn't handle it
+2. In the new thread, it uses while loop to check if the queue has keys, which has bad performance
 
 Run plugin in IDEA
 ------------------
