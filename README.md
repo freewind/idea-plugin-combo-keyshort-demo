@@ -1,12 +1,9 @@
-Idea Plugin Hold Keys and Send Them Together when not Busy Demo
-===============================================================
+Idea Plugin Combo Keyshort Demo
+===============================
 
-When you typing in an editor fast, they will not show, and when you stop typing for a while, they will show together.
+You can press some keys at the same time, the matched words will be shown and put, which makes us coding fast.
 
-Two problems in this demo:
-
-1. The `sendingEvents` and `keyEvents` is are thread-safe, I didn't handle it
-2. In the new thread, it uses while loop to check if the queue has keys, which has bad performance
+The prototype is OK, but it has much of work to do to make it work perfectly.
 
 Run plugin in IDEA
 ------------------
